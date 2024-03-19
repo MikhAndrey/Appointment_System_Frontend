@@ -3,9 +3,10 @@
 </script>
 
 <template>
-  <footer class="d-flex align-items-center justify-content-center">
-    <p class="mb-0">&copy; {{ currentYear }} Appointment system</p>
-    <!-- Add other footer elements -->
+  <footer class="footer">
+    <div class="content has-text-centered">
+      <p class="mb-0">&copy; {{ currentYear }} Appointment system</p>
+    </div>
   </footer>
 </template>
 
