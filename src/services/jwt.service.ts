@@ -3,19 +3,19 @@ import {UserInfo} from "../models/userInfo";
 
 export class JwtService {
 
-    private static jwtAlias: string = "accessToken";
+    private static _accessTokenAlias: string = "accessToken";
 
     public static parseJwtResponse(token: string): void {
         JwtService.setUserInfoFromToken(token);
-        localStorage.setItem(JwtService.jwtAlias, token);
+        localStorage.setItem(JwtService._accessTokenAlias, token);
     }
 
     public static removeJwt(): void {
-        localStorage.removeItem(JwtService.jwtAlias);
+        localStorage.removeItem(JwtService._accessTokenAlias);
     }
 
     public static getJwt(): string | null {
-        return localStorage.getItem(JwtService.jwtAlias);
+        return localStorage.getItem(JwtService._accessTokenAlias);
     }
 
     private static getParsedToken(token: string): UserInfo {
