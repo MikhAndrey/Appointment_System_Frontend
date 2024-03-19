@@ -4,7 +4,7 @@
       <span>Date: {{ appointment.date }} ({{ appointment.start }} - {{ appointment.end }})</span>
     </div>
   </div>
-  <MDBSpinner v-if="!dataLoaded"></MDBSpinner>
+  <b-loading v-model="isLoading"></b-loading>
 </template>
 
 <script lang="ts">
@@ -16,7 +16,7 @@ export default {
   data() {
     return {
       appointments: [] as Appointment[],
-      dataLoaded: false,
+      isLoading: true,
       pageNumber: 1
     }
   },
@@ -29,9 +29,9 @@ export default {
       const appointmentService = new AppointmentService();
       appointmentService.getPage(this.pageNumber).then((res) => {
         this.appointments = res.data.model;
-        this.dataLoaded = true;
+        this.isLoading = false;
       }).catch(err => {
-        this.dataLoaded = true;
+        this.isLoading = false;
         alert(err)
       });
     }
