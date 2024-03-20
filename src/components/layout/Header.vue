@@ -42,7 +42,6 @@
 </template>
 
 <script lang="ts">
-import {MDBIcon} from "mdb-vue-ui-kit";
 import {AccountService} from "../../services/account.service";
 import router from "../../router";
 import {UserInfo} from "../../models/userInfo";
@@ -52,9 +51,6 @@ export default {
     return {
       accountService: new AccountService()
     }
-  },
-  components: {
-    MDBIcon
   },
   computed: {
     userInfo(): UserInfo | undefined {
