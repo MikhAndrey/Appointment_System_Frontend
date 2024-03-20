@@ -1,38 +1,29 @@
-import {Constants} from "../models/constants";
 import {UserInfo} from "../models/userInfo";
+import {TokenResponse} from "../models/account.model";
 
 export class JwtService {
 
     private static _accessTokenAlias: string = "accessToken";
+    private static _refreshTokenAlias: string = "refreshToken";
 
-    public static parseJwtResponse(token: string): void {
-        JwtService.setUserInfoFromToken(token);
-        localStorage.setItem(JwtService._accessTokenAlias, token);
+    public static setTokens(model: TokenResponse): void {
+        localStorage.setItem(JwtService._accessTokenAlias, model.access);
+        localStorage.setItem(JwtService._refreshTokenAlias, model.refresh);
     }
 
-    public static removeJwt(): void {
+    public static removeTokens(): void {
         localStorage.removeItem(JwtService._accessTokenAlias);
+        localStorage.removeItem(JwtService._refreshTokenAlias);
     }
 
     public static getJwt(): string | null {
         return localStorage.getItem(JwtService._accessTokenAlias);
     }
 
-    private static getParsedToken(token: string): UserInfo {
-        return JSON.parse(atob(token.split('.')[1]));
+    public static getParsedTokenInfo(): UserInfo | undefined {
+        const token: string | null = JwtService.getJwt();
+        if (token != null)
+            return JSON.parse(atob(token.split('.')[1]));
+        return undefined;
     }
-
-    private static setUserInfoFromToken(token: string): void {
-        const parsedToken = JwtService.getParsedToken(token);
-        if (parsedToken) {
-            Constants.userInfo = parsedToken;
-        }
-    }
-
-    public static initialize (): void {
-        const jwtToken: string | null = JwtService.getJwt();
-        if (jwtToken != null) {
-            JwtService.setUserInfoFromToken(jwtToken);
-        }
-    };
 }

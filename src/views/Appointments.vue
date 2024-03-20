@@ -32,7 +32,6 @@ export default {
         this.isLoading = false;
       }).catch(err => {
         this.isLoading = false;
-        alert(err)
       });
     }
   },

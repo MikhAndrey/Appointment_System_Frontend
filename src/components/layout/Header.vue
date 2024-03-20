@@ -6,11 +6,11 @@
       </b-navbar-item>
     </template>
     <template #start>
-      <b-navbar-item href="/">
+      <b-navbar-item tag="router-link" :to="{ path: '/' }">
         Appointments
       </b-navbar-item>
       <b-navbar-item tag="router-link" :to="{ path: '/employees' }">
-        Documentation
+        Employees
       </b-navbar-item>
       <b-navbar-item tag="router-link" :to="{ path: '/customers' }">
         Customers
@@ -22,22 +22,19 @@
 
     <template #end>
       <b-navbar-item tag="div">
-        <div v-if="username">
+        <div v-if="userInfo?.username">
           <b-icon
             icon="account"
             class="me-2"
           >
           </b-icon>
-          <span style="font-size: large">{{ username }}</span>
+          <span style="font-size: large">{{ userInfo?.username }}</span>
           <b-icon
               icon="logout"
               class="ms-3 link"
-              v-on:click="username = undefined, accountService.logout()"
+              v-on:click="logout()"
           >
           </b-icon>
-        </div>
-        <div v-else>
-          <button class="btn btn-primary">Login</button>
         </div>
       </b-navbar-item>
     </template>
@@ -46,20 +43,30 @@
 
 <script lang="ts">
 import {MDBIcon} from "mdb-vue-ui-kit";
-import {Constants} from "../../models/constants";
 import {AccountService} from "../../services/account.service";
+import router from "../../router";
+import {UserInfo} from "../../models/userInfo";
 
 export default {
   data() {
     return {
-      username: Constants.userInfo?.username,
-      accountService: AccountService
+      accountService: new AccountService()
     }
   },
   components: {
     MDBIcon
   },
+  computed: {
+    userInfo(): UserInfo | undefined {
+      return this.$store.getters.getUserInfo;
+    }
+  },
   methods: {
+    logout() {
+      this.$store.commit('setUserInfo', undefined);
+      this.accountService.logout();
+      router.push({ name: "login" });
+    }
   }
 };
 </script>
