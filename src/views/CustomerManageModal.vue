@@ -2,58 +2,74 @@
   <form @submit="mode === 'add' ? onAdd() : onEdit()">
     <div class="modal-card w-auto">
       <header class="modal-card-head">
-        <p class="modal-card-title">{{ mode === "add" ? "Add" : "Edit" }} department</p>
+        <p class="modal-card-title">{{ mode === "add" ? "Add" : "Edit" }} customer</p>
         <button
-          type="button"
-          class="delete"
-          @click="$emit('close')"
+            type="button"
+            class="delete"
+            @click="$emit('close')"
         />
       </header>
       <section class="modal-card-body">
-        <b-field label="Name">
+        <b-field label="Full name">
           <b-input
             type="text"
-            v-model="department.fullname"
-            placeholder="Department name"
+            v-model="customer.fullname"
+            placeholder="Customer Fullname"
+            required>
+          </b-input>
+        </b-field>
+        <b-field label="Email">
+          <b-input
+            type="email"
+            v-model="customer.email"
+            placeholder="someemail@mail.domain"
+            required>
+          </b-input>
+        </b-field>
+        <b-field label="Phone">
+          <b-input
+            type="tel"
+            v-model="customer.phone"
+            placeholder="+375441234567"
             required>
           </b-input>
         </b-field>
         <b-field label="Address">
           <b-input
             type="text"
-            v-model="department.address"
+            v-model="customer.address"
             placeholder="Sovetskaya street, 8/12"
             required>
           </b-input>
         </b-field>
         <button
-          class="btn btn-primary"
           type="submit"
+          class="btn btn-primary"
         >Save</button>
       </section>
     </div>
   </form>
 </template>
 <script lang="ts">
-import {Department} from "../models/department.model";
-import {DepartmentService} from "../services/department.service";
 import {AxiosResponse} from "axios";
 import {Response} from "../models/response";
+import {Customer} from "../models/customer.model";
+import {CustomerService} from "../services/customer.service";
 
 export default {
   props: {
-    department: Department,
+    customer: Customer,
     mode: "add" as "add" | "edit"
   },
   emits: ['close', 'refreshData'],
   data() {
     return {
-      departmentService: new DepartmentService()
+      customerService: new CustomerService()
     }
   },
   methods: {
     onAdd() {
-      this.departmentService.add(this.department).then((res: AxiosResponse<Response<Department>>) => {
+      this.customerService.add(this.customer).then((res: AxiosResponse<Response<Customer>>) => {
         this.$buefy.toast.open({
           duration: 3000,
           message: res.data.message,
@@ -64,7 +80,7 @@ export default {
       }, (err: any) => alert(err));
     },
     onEdit() {
-      this.departmentService.edit(this.department).then((res: AxiosResponse<Response<Department>>) => {
+      this.customerService.edit(this.customer).then((res: AxiosResponse<Response<Customer>>) => {
         this.$buefy.toast.open({
           duration: 3000,
           message: res.data.message,
