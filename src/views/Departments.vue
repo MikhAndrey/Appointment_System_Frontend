@@ -11,7 +11,7 @@
     <div v-if="departments.length > 0" class="row mb-4">
       <div class="col-sm-12 col-md-6 col-lg-4 col-4 pb-3 ps-0 pe-3" v-for="department of departments">
         <div class="card">
-          <header class="card-header">
+          <header class="card-header bg-card-header">
             <p class="card-header-title">
               {{ department.fullname }}
             </p>

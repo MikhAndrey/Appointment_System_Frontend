@@ -11,7 +11,7 @@
     <div v-if="customers.length > 0" class="row mb-4">
       <div class="col-sm-12 col-md-6 col-lg-4 col-4 pb-3 ps-0 pe-3" v-for="customer of customers">
         <div class="card">
-          <header class="card-header">
+          <header class="card-header bg-card-header">
             <p class="card-header-title">
               {{ customer.fullname }}
             </p>

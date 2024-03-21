@@ -21,6 +21,6 @@ export class DepartmentService extends BaseApiService {
     }
 
     public delete(id: number): Promise<AxiosResponse<Response<any>>> {
-        return http.delete<Response<Department>>(`${this.apiUrl}/${id}`);
+        return http.delete<Response<any>>(`${this.apiUrl}/${id}`);
     }
 }

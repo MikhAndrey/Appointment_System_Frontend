@@ -3,7 +3,6 @@ import {AxiosResponse} from "axios";
 import {PageResponse, Response} from "../models/response";
 import http from "../models/http";
 import {Customer} from "../models/customer.model";
-import {Department} from "../models/department.model";
 
 export class CustomerService extends BaseApiService {
     apiUrl = this.baseApiUrl + 'customers';
@@ -13,15 +12,15 @@ export class CustomerService extends BaseApiService {
         return http.get<PageResponse<Customer[]>>(`${this.apiUrl}/list?pageNumber=${pageNumber}&pageSize=${pageSize}`);
     }
 
-    public add(department: Customer): Promise<AxiosResponse<Response<Department>>> {
-        return http.post<Response<Department>>(`${this.apiUrl}`, department);
+    public add(customer: Customer): Promise<AxiosResponse<Response<Customer>>> {
+        return http.post<Response<Customer>>(`${this.apiUrl}`, customer);
     }
 
-    public edit(department: Department): Promise<AxiosResponse<Response<Department>>> {
-        return http.put<Response<Department>>(`${this.apiUrl}/${department.id}`, department);
+    public edit(customer: Customer): Promise<AxiosResponse<Response<Customer>>> {
+        return http.put<Response<Customer>>(`${this.apiUrl}/${customer.id}`, customer);
     }
 
     public delete(id: number): Promise<AxiosResponse<Response<any>>> {
-        return http.delete<Response<Department>>(`${this.apiUrl}/${id}`);
+        return http.delete<Response<any>>(`${this.apiUrl}/${id}`);
     }
 }

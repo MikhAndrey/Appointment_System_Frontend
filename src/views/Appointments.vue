@@ -54,7 +54,7 @@
         </div>
       </div>
     </div>
-    <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center mb-4">
       <b-pagination
         :total="paginationInfo.totalItems"
         v-model="paginationInfo.pageNumber"
@@ -67,6 +67,7 @@
         aria-previous-label="Previous page"
         aria-page-label="Page"
         aria-current-label="Current page"
+        @update:model-value="getData()"
       />
     </div>
   </div>
