@@ -51,7 +51,7 @@ export default {
     login() {
       this.accountService.login(this.model).then((res: any) => {
         JwtService.setTokens(res.data);
-        this.$store.commit('setUserInfo', JwtService.getParsedTokenInfo());
+        this.$store.commit('setUserInfo', JwtService.getCurrentUserInfo());
         router.push({ name: "home" });
       }).catch((err: any) => {
         alert(err);

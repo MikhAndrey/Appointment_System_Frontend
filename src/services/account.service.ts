@@ -12,6 +12,10 @@ export class AccountService extends BaseApiService {
     }
     
     public login(model: LoginModel) : Promise<AxiosResponse<TokenResponse>> {
-            return http.post<TokenResponse>(`${this.apiUrl}`, model);
+        return http.post<TokenResponse>(`${this.apiUrl}`, model);
+    }
+    
+    public refreshTokens(refreshToken: string) : Promise<AxiosResponse<TokenResponse>> {
+        return http.post<TokenResponse>(`${this.apiUrl}/refresh`, {refresh: refreshToken});
     }
 }

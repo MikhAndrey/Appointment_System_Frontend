@@ -22,7 +22,7 @@ export default {
     }
   },
   mounted() {
-    this.$store.commit('setUserInfo', JwtService.getParsedTokenInfo());
+    this.$store.commit('setUserInfo', JwtService.getCurrentUserInfo());
   }
 }
 </script>

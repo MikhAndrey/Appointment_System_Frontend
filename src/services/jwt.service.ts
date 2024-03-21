@@ -20,10 +20,26 @@ export class JwtService {
         return localStorage.getItem(JwtService._accessTokenAlias);
     }
 
-    public static getParsedTokenInfo(): UserInfo | undefined {
+    public static getRefresh(): string | null {
+        return localStorage.getItem(JwtService._refreshTokenAlias);
+    }
+    
+    public static isTokenExpired(): boolean {
+        const tokenData = JwtService.getParsedToken();
+        if (tokenData === undefined)
+            return false;
+        const expirationDate: Date = new Date(tokenData.exp);
+        return expirationDate < new Date();
+    }
+
+    public static getParsedToken() {
         const token: string | null = JwtService.getJwt();
         if (token != null)
             return JSON.parse(atob(token.split('.')[1]));
         return undefined;
+    }
+    
+    public static getCurrentUserInfo(): UserInfo | undefined {
+        return JwtService.getParsedToken() as UserInfo | undefined;
     }
 }
