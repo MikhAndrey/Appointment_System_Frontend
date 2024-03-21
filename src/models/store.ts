@@ -1,5 +1,5 @@
 import {createStore} from "vuex";
-import {UserInfo} from "./userInfo";
+import {UserInfo} from "./account.model";
 
 export const store = createStore({
     state: {
@@ -15,11 +15,15 @@ export const store = createStore({
         }
     },
     getters: {
-        getUserInfo (state) {
+        getUserInfo (state): UserInfo | undefined {
             return state.userInfo;
         },
         getPageSize (state) {
             return state.pageSize;
+        },
+        isInPermission(state, permissionName: string): 
+            (permission: string) => boolean | undefined {
+            return permissionName => state.userInfo?.permissions.some(p => p === permissionName);
         }
     }
 });

@@ -3,7 +3,7 @@
     <div class="box d-flex align-items-center login-bg">
       <div class="columns mb-4">
         <div class="column">
-          <h3 class="title is-3 text-center">Login</h3>
+          <h3 class="title is-3 text-center">Sign in</h3>
           <form v-on:submit="login()">
             <b-field label="Username">
               <b-input
@@ -23,7 +23,7 @@
               >
               </b-input>
             </b-field>
-            <button class="btn btn-primary w-50" type="submit">Send</button>
+            <button class="btn btn-primary w-50" type="submit">Login</button>
           </form>
         </div>
         <div class="column d-flex align-items-center">
@@ -38,7 +38,7 @@ import {AccountService} from "../services/account.service";
 import {LoginModel} from "../models/account.model";
 import {JwtService} from "../services/jwt.service";
 import router from "../router";
-import {UserInfo} from "../models/userInfo";
+import {UserInfo} from "../models/account.model";
 
 export default {
   data() {

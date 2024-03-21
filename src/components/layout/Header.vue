@@ -7,15 +7,24 @@
     </template>
     <template #start>
       <b-navbar-item tag="router-link" :to="{ path: '/' }">
-        Appointments
+        Main page
       </b-navbar-item>
-      <b-navbar-item tag="router-link" :to="{ path: '/employees' }">
+      <b-navbar-item 
+        v-if="hasPermission('view_employee')" 
+        tag="router-link" :to="{ path: '/employees' }"
+      >
         Employees
       </b-navbar-item>
-      <b-navbar-item tag="router-link" :to="{ path: '/customers' }">
+      <b-navbar-item
+        v-if="hasPermission('view_customer')"
+        tag="router-link" :to="{ path: '/customers' }"
+      >
         Customers
       </b-navbar-item>
-      <b-navbar-item tag="router-link" :to="{ path: '/departments' }">
+      <b-navbar-item
+        v-if="hasPermission('view_department')"
+        tag="router-link" :to="{ path: '/departments' }"
+      >
         Departments
       </b-navbar-item>
     </template>
@@ -44,7 +53,7 @@
 <script lang="ts">
 import {AccountService} from "../../services/account.service";
 import router from "../../router";
-import {UserInfo} from "../../models/userInfo";
+import {UserInfo} from "../../models/account.model";
 
 export default {
   data() {
@@ -55,6 +64,9 @@ export default {
   computed: {
     userInfo(): UserInfo | undefined {
       return this.$store.getters.getUserInfo;
+    },
+    hasPermission(): (permission: string) => any {
+      return (permissionName: string) => this.$store.getters.isInPermission(permissionName);
     }
   },
   methods: {

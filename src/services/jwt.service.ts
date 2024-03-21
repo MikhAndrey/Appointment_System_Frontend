@@ -1,4 +1,4 @@
-import {UserInfo} from "../models/userInfo";
+import {UserInfo} from "../models/account.model";
 import {TokenResponse} from "../models/account.model";
 
 export class JwtService {

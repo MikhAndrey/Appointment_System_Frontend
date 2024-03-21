@@ -10,7 +10,7 @@ import Footer from './components/layout/Footer.vue';
 </template>
 <script lang="ts">
 
-import {UserInfo} from "./models/userInfo";
+import {UserInfo} from "./models/account.model";
 import {JwtService} from "./services/jwt.service";
 
 export default {
