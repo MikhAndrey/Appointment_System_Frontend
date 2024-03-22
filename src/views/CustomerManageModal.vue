@@ -13,7 +13,7 @@
         <b-field label="Full name">
           <b-input
             type="text"
-            v-model="customer.fullname"
+            v-model.trim="customer.fullname"
             placeholder="Customer Fullname"
             required>
           </b-input>
@@ -21,7 +21,7 @@
         <b-field label="Email">
           <b-input
             type="email"
-            v-model="customer.email"
+            v-model.trim="customer.email"
             placeholder="someemail@mail.domain"
             required>
           </b-input>
@@ -29,7 +29,7 @@
         <b-field label="Phone">
           <b-input
             type="tel"
-            v-model="customer.phone"
+            v-model.trim="customer.phone"
             placeholder="+375441234567"
             required>
           </b-input>
@@ -37,7 +37,7 @@
         <b-field label="Address">
           <b-input
             type="text"
-            v-model="customer.address"
+            v-model.trim="customer.address"
             placeholder="Sovetskaya street, 8/12"
             required>
           </b-input>
@@ -77,7 +77,17 @@ export default {
         });
         this.$emit('close');
         this.$emit('refreshData');
-      }, (err: any) => alert(err));
+      }, (err: any) => {
+        for (let prop in err.response.data.errors) {
+          err.response.data.errors[prop].forEach((error: string) => {
+            this.$buefy.toast.open({
+              duration: 3000,
+              message: error,
+              type: 'is-danger'
+            });
+          });
+        }
+      });
     },
     onEdit() {
       this.customerService.edit(this.customer).then((res: AxiosResponse<Response<Customer>>) => {
@@ -88,7 +98,17 @@ export default {
         });
         this.$emit('close');
         this.$emit('refreshData');
-      }, (err: any) => alert(err));
+      }, (err: any) => {
+        for (let prop in err.response.data.errors) {
+          err.response.data.errors[prop].forEach((error: string) => {
+            this.$buefy.toast.open({
+              duration: 3000,
+              message: error,
+              type: 'is-danger'
+            });
+          });
+        }
+      });
     }
   }
 }

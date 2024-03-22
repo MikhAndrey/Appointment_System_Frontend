@@ -13,7 +13,7 @@
         <b-field label="Name">
           <b-input
             type="text"
-            v-model="department.fullname"
+            v-model.trim="department.fullname"
             placeholder="Department name"
             required>
           </b-input>
@@ -21,7 +21,7 @@
         <b-field label="Address">
           <b-input
             type="text"
-            v-model="department.address"
+            v-model.trim="department.address"
             placeholder="Sovetskaya street, 8/12"
             required>
           </b-input>
@@ -61,7 +61,17 @@ export default {
         });
         this.$emit('close');
         this.$emit('refreshData');
-      }, (err: any) => alert(err));
+      }, (err: any) => {
+        for (let prop in err.response.data.errors) {
+          err.response.data.errors[prop].forEach((error: string) => {
+            this.$buefy.toast.open({
+              duration: 3000,
+              message: error,
+              type: 'is-danger'
+            });
+          });
+        }
+      });
     },
     onEdit() {
       this.departmentService.edit(this.department).then((res: AxiosResponse<Response<Department>>) => {
@@ -72,7 +82,17 @@ export default {
         });
         this.$emit('close');
         this.$emit('refreshData');
-      }, (err: any) => alert(err));
+      }, (err: any) => {
+        for (let prop in err.response.data.errors) {
+          err.response.data.errors[prop].forEach((error: string) => {
+            this.$buefy.toast.open({
+              duration: 3000,
+              message: error,
+              type: 'is-danger'
+            });
+          });
+        }
+      });
     }
   }
 }

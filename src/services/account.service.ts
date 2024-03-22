@@ -8,7 +8,9 @@ export class AccountService extends BaseApiService {
     apiUrl = this.baseApiUrl + 'token';
     
     public logout() {
+        const refreshToken: string | null = JwtService.getRefresh();
         JwtService.removeTokens();
+        return http.post<TokenResponse>(`${this.apiUrl}/remove`, {refresh: refreshToken});
     }
     
     public login(model: LoginModel) : Promise<AxiosResponse<TokenResponse>> {

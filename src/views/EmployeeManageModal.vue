@@ -13,7 +13,7 @@
         <b-field label="Full name">
           <b-input
               type="text"
-              v-model="employee.fullname"
+              v-model.trim="employee.fullname"
               placeholder="Employee Fullname"
               required>
           </b-input>
@@ -21,7 +21,7 @@
         <b-field label="Email">
           <b-input
               type="email"
-              v-model="employee.email"
+              v-model.trim="employee.email"
               placeholder="someemail@mail.domain"
               required>
           </b-input>
@@ -29,7 +29,7 @@
         <b-field label="Phone">
           <b-input
               type="tel"
-              v-model="employee.phone"
+              v-model.trim="employee.phone"
               placeholder="+375441234567"
               required>
           </b-input>
@@ -37,7 +37,7 @@
         <b-field label="Address">
           <b-input
               type="text"
-              v-model="employee.address"
+              v-model.trim="employee.address"
               placeholder="Sovetskaya street, 8/12"
               required>
           </b-input>
@@ -112,7 +112,17 @@ export default {
         });
         this.$emit('close');
         this.$emit('refreshData');
-      }, (err: any) => alert(err));
+      }, (err: any) => {
+        for (let prop in err.response.data.errors) {
+          err.response.data.errors[prop].forEach((error: string) => {
+            this.$buefy.toast.open({
+              duration: 3000,
+              message: error,
+              type: 'is-danger'
+            });
+          });
+        }
+      });
     },
     onEdit() {
       this.employeeService.edit(this.employee).then((res: AxiosResponse<Response<Employee>>) => {
@@ -123,7 +133,17 @@ export default {
         });
         this.$emit('close');
         this.$emit('refreshData');
-      }, (err: any) => alert(err));
+      }, (err: any) => {
+        for (let prop in err.response.data.errors) {
+          err.response.data.errors[prop].forEach((error: string) => {
+            this.$buefy.toast.open({
+              duration: 3000,
+              message: error,
+              type: 'is-danger'
+            });
+          });
+        }
+      });
     }
   },
   mounted() {

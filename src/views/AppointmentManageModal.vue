@@ -63,6 +63,7 @@ import {CustomerService} from "../services/customer.service";
 import {CustomerShortModel} from "../models/customer.model";
 import {Appointment, AppointmentCreate} from "../models/appointment.model";
 import {AppointmentService} from "../services/appointment.service";
+import {DateHelper} from "../helpers/date-helper";
 
 export default {
   props: {
@@ -107,7 +108,17 @@ export default {
         });
         this.$emit('close');
         this.$emit('refreshData');
-      }, (err: any) => alert(err));
+      }, (err: any) => {
+        for (let prop in err.response.data.errors) {
+          err.response.data.errors[prop].forEach((error: string) => {
+            this.$buefy.toast.open({
+              duration: 3000,
+              message: error,
+              type: 'is-danger'
+            });
+          });
+        }
+      });
     },
     onEdit() {
       this.convertDatesToString();
@@ -119,10 +130,20 @@ export default {
         });
         this.$emit('close');
         this.$emit('refreshData');
-      }, (err: any) => alert(err));
+      }, (err: any) => {
+        for (let prop in err.response.data.errors) {
+          err.response.data.errors[prop].forEach((error: string) => {
+            this.$buefy.toast.open({
+              duration: 3000,
+              message: error,
+              type: 'is-danger'
+            });
+          }); 
+        }
+      });
     },
     convertDatesToString() {
-      this.appointment.date = new Date(this.date).toISOString().split('T')[0];
+      this.appointment.date = DateHelper.ToLocalISOString(this.date).split('T')[0];
       this.appointment.start = new Date(this.startDate).toLocaleTimeString();
       this.appointment.end = new Date(this.endDate).toLocaleTimeString();
     }

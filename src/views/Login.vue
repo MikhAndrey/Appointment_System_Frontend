@@ -54,7 +54,13 @@ export default {
         this.$store.commit('setUserInfo', JwtService.getCurrentUserInfo());
         router.push({ name: "home" });
       }).catch((err: any) => {
-        alert(err);
+        for (let prop in err.response.data) {
+          this.$buefy.toast.open({
+            duration: 3000,
+            message: err.response.data[prop],
+            type: 'is-danger'
+          });
+        }
       });
     }
   },

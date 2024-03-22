@@ -112,6 +112,15 @@ export default {
         this.isLoading = false;
       }).catch((err: any) => {
         this.isLoading = false;
+        for (let prop in err.response.data.errors) {
+          err.response.data.errors[prop].forEach((error: string) => {
+            this.$buefy.toast.open({
+              duration: 3000,
+              message: error,
+              type: 'is-danger'
+            });
+          });
+        }
       });
     },
     onAdd() {
@@ -139,6 +148,16 @@ export default {
               type: 'is-success'
             });
             this.getData();
+          }).catch((err: any) => {
+            for (let prop in err.response.data.errors) {
+              err.response.data.errors[prop].forEach((error: string) => {
+                this.$buefy.toast.open({
+                  duration: 3000,
+                  message: error,
+                  type: 'is-danger'
+                });
+              });
+            }
           });
         }
       })

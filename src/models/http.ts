@@ -32,11 +32,11 @@ const errorInterceptor = async(error: any) => {
                                 originalConfig.headers['Authorization'] = `Bearer ${tokenResponse.data.access}`;
                                 return httpClient(originalConfig);
                             } catch (error) {
-                                accountService.logout();
+                                await accountService.logout();
                                 return Promise.reject(error);
                             }
                         } else {
-                            accountService.logout();
+                            await accountService.logout();
                             return Promise.reject(new Error('No refresh token available'));
                         }
                     }
