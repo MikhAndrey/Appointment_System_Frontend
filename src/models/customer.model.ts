@@ -5,3 +5,8 @@ export class Customer {
     phone: string = "";
     address: string = "";
 }
+
+export class CustomerShortModel {
+    id: number;
+    fullname: string = "";
+}

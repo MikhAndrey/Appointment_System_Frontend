@@ -2,11 +2,12 @@
 
 #app {
   font-weight: normal;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   font-family: Roboto, Helvetica, Arial, sans-serif;
+  background-color: rgba(160, 210, 235, 0.21);
 }
 
 a,
@@ -15,6 +16,26 @@ a,
   color: hsla(160, 100%, 37%, 1);
   transition: 0.4s;
   padding: 3px;
+}
+
+.link {
+  cursor: pointer !important;
+}
+
+.card-data-value {
+  color: #888;
+}
+
+.font-bolder {
+  font-weight: bolder;
+}
+
+.bg-card-header {
+  background-color: #e5eaf5 !important;
+}
+
+.actions-modal-mid {
+  min-width: 40vw;
 }
 
 @media (hover: hover) {

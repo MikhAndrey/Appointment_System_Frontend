@@ -4,14 +4,27 @@ import Footer from './components/layout/Footer.vue';
 </script>
 
 <template>
-  <Header class="w-100"/>
+  <Header v-if="userInfo" class="w-100"/>
   <router-view/>
-  <Footer class="w-100"/>
+  <Footer v-if="userInfo" class="w-100"/>
 </template>
 <script lang="ts">
+
+import {UserInfo} from "./models/account.model";
 import {JwtService} from "./services/jwt.service";
-JwtService.initialize();
+
+export default {
+  data() {
+  },
+  computed: {
+    userInfo (): UserInfo | undefined {
+      return this.$store.getters.getUserInfo;
+    }
+  },
+  mounted() {
+    this.$store.commit('setUserInfo', JwtService.getCurrentUserInfo());
+  }
+}
 </script>
 <style scoped>
 </style>
-
