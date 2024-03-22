@@ -105,6 +105,7 @@
   >
     <template #default="props">
       <customer-manage-modal
+        class="actions-modal-mid"
         :customer="actionsModel"
         :mode="manageMode"
         @close="props.close"

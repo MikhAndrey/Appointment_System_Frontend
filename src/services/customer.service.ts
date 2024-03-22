@@ -2,7 +2,7 @@ import {BaseApiService} from "./baseApi.service";
 import {AxiosResponse} from "axios";
 import {PageResponse, Response} from "../models/response";
 import http from "../models/http";
-import {Customer} from "../models/customer.model";
+import {Customer, CustomerShortModel} from "../models/customer.model";
 
 export class CustomerService extends BaseApiService {
     apiUrl = this.baseApiUrl + 'customers';
@@ -10,6 +10,11 @@ export class CustomerService extends BaseApiService {
     public getPage(pageNumber: number, pageSize: number)
         : Promise<AxiosResponse<PageResponse<Customer[]>>> {
         return http.get<PageResponse<Customer[]>>(`${this.apiUrl}/list?pageNumber=${pageNumber}&pageSize=${pageSize}`);
+    }
+
+    public getShortModelsList()
+        : Promise<AxiosResponse<Response<CustomerShortModel[]>>> {
+        return http.get<Response<CustomerShortModel[]>>(`${this.apiUrl}/shortList`);
     }
 
     public add(customer: Customer): Promise<AxiosResponse<Response<Customer>>> {

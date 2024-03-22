@@ -68,7 +68,8 @@
     aria-modal
   >
     <template #default="props">
-      <department-manage-modal 
+      <department-manage-modal
+        class="actions-modal-mid"
         :department="actionsModel"
         :mode="manageMode"
         @close="props.close"

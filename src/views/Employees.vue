@@ -106,6 +106,7 @@
   >
     <template #default="props">
       <employee-manage-modal
+        class="actions-modal-mid"  
         :employee="actionsModel"
         :mode="manageMode"
         @close="props.close"

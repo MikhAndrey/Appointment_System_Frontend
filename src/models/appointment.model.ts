@@ -9,3 +9,20 @@ export class Appointment {
     employee: Employee = new Employee();
     customer: Customer = new Customer();
 }
+
+export class AppointmentCreate {
+    date: string = "";
+    start: string = "";
+    end: string = "";
+    employeeId: number;
+    customerId: number;
+}
+
+export class AppointmentEdit {
+    id: number = 0;
+    date: string = "";
+    start: string = "";
+    end: string = "";
+    employeeId: number;
+    customerId: number;
+}

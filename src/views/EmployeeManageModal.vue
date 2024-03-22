@@ -42,21 +42,23 @@
               required>
           </b-input>
         </b-field>
-        <b-field label="Roles">
-          <b-select
-            multiple
-            v-model="employee.roles"
-          >
-            <option v-for="role in roles" :value="role">{{ role }}</option>
-          </b-select>
-        </b-field>
-        <b-field label="Department">
-          <b-select
-            v-model="employee.departmentId"
-          >
-            <option v-for="department in departments" :value="department.id">{{ department.fullname }}</option>
-          </b-select>
-        </b-field>
+        <div class="d-flex">
+          <b-field label="Roles">
+            <b-select
+              multiple
+              v-model="employee.roles"
+            >
+              <option v-for="role in roles" :value="role">{{ role }}</option>
+            </b-select>
+          </b-field>
+          <b-field label="Department" class="ms-4">
+            <b-select
+              v-model="employee.departmentId"
+            >
+              <option v-for="department in departments" :value="department.id">{{ department.fullname }}</option>
+            </b-select>
+          </b-field>
+        </div>
         <button
           type="submit"
           class="btn btn-primary"

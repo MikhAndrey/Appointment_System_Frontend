@@ -28,3 +28,8 @@ export class EmployeeEdit {
     roles: string[];
     departmentId: number;
 }
+
+export class EmployeeShortModel {
+    id: number;
+    fullname: string = "";
+}
