@@ -122,7 +122,8 @@ export default {
       appointmentService: new AppointmentService(),
       isModalOpened: false,
       isLoading: true,
-      paginationInfo: new PaginationInfo()
+      paginationInfo: new PaginationInfo(),
+      websocket: null
     }
   },
   methods: {
@@ -168,6 +169,25 @@ export default {
           });
         }
       })
+    },
+    onSocketMessage(event: any) {
+      const messageData: {data: any, type: string} = JSON.parse(event.data);
+      switch (messageData.type) {
+        case 'appointment.delete':
+          this.appointments = this.appointments.filter((el: Appointment) => el.id !== messageData.data);
+          break;
+        case 'appointment.update':
+          let updatedAppointment = this.appointments.find((el: Appointment) => el.id === messageData.data.id);
+          Object.assign(updatedAppointment, messageData.data);
+          break;
+        case 'appointment.create':
+          if (this.paginationInfo.pageNumber === this.paginationInfo.totalPages) {
+            this.appointments.push(messageData.data);
+          }
+      }
+    },
+    onSocketError(error: any) {
+      console.error(error);
     }
   },
   computed: {
@@ -183,6 +203,9 @@ export default {
   },
   mounted() {
     this.getData();
+    this.websocket = new WebSocket('ws://localhost:8000/ws/appointments/');
+    this.websocket.onmessage = this.onSocketMessage;
+    this.websocket.onerror = this.onSocketError;
   }
 };
 </script>
