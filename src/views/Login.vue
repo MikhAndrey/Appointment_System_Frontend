@@ -4,7 +4,7 @@
       <div class="columns mb-4">
         <div class="column">
           <h3 class="title is-3 text-center">Sign in</h3>
-          <form v-on:submit="login()">
+          <form @submit.prevent="login()">
             <b-field label="Username">
               <b-input
                   v-model.trim="model.username"

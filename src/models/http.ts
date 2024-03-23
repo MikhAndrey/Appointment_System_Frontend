@@ -32,11 +32,13 @@ const errorInterceptor = async(error: any) => {
                                 originalConfig.headers['Authorization'] = `Bearer ${tokenResponse.data.access}`;
                                 return httpClient(originalConfig);
                             } catch (error) {
-                                await accountService.logout();
+                                accountService.logout().then(() => {
+                                    JwtService.removeTokens();
+                                });
                                 return Promise.reject(error);
                             }
                         } else {
-                            await accountService.logout();
+                            JwtService.removeTokens();
                             return Promise.reject(new Error('No refresh token available'));
                         }
                     }

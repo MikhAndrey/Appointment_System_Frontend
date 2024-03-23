@@ -9,7 +9,6 @@ export class AccountService extends BaseApiService {
     
     public logout() {
         const refreshToken: string | null = JwtService.getRefresh();
-        JwtService.removeTokens();
         return http.post<TokenResponse>(`${this.apiUrl}/remove`, {refresh: refreshToken});
     }
     

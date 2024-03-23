@@ -54,6 +54,7 @@
 import {AccountService} from "../../services/account.service";
 import router from "../../router";
 import {UserInfo} from "../../models/account.model";
+import {JwtService} from "../../services/jwt.service";
 
 export default {
   data() {
@@ -72,7 +73,17 @@ export default {
   methods: {
     logout() {
       this.$store.commit('setUserInfo', undefined);
-      this.accountService.logout();
+      this.accountService.logout().then(() => {
+        JwtService.removeTokens();
+      }).catch((err: any) => {
+        for (let prop in err.response.data) {
+          this.$buefy.toast.open({
+            duration: 3000,
+            message: err.response.data[prop],
+            type: 'is-danger'
+          });
+        }
+      });
       router.push({ name: "login" });
     }
   }
