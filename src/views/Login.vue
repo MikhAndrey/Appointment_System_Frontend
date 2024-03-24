@@ -27,7 +27,7 @@
           </form>
         </div>
         <div class="column d-flex align-items-center">
-          <img src="/src/assets/login-image.jpg" class="card img-fluid"/>
+          <img src="/login-image.jpg" alt="Login image" class="card img-fluid"/>
         </div>
       </div>
     </div>
