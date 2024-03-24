@@ -35,22 +35,18 @@
   </form>
 </template>
 <script lang="ts">
-import {Department} from "../models/department.model";
-import {DepartmentService} from "../services/department.service";
+import {Department} from "@/models/department.model";
+import {DepartmentService} from "@/services/department.service";
 import {AxiosResponse} from "axios";
-import {Response} from "../models/response";
+import {Response} from "@/models/response";
+import {Options, Vue} from "vue-class-component";
 
-export default {
+@Options ({
   props: {
     department: Department,
     mode: "add" as "add" | "edit"
   },
   emits: ['close', 'refreshData'],
-  data() {
-    return {
-      departmentService: new DepartmentService()
-    }
-  },
   methods: {
     onAdd() {
       this.departmentService.add(this.department).then((res: AxiosResponse<Response<Department>>) => {
@@ -95,6 +91,10 @@ export default {
       });
     }
   }
+})
+
+export default class DepartmentManageModal extends Vue {
+  departmentService: DepartmentService = new DepartmentService();
 }
 </script>
 

@@ -100,31 +100,18 @@
 </template>
 
 <script lang="ts">
-import {Appointment, AppointmentCreate} from "../models/appointment.model";
-import {AppointmentService} from "../services/appointment.service";
-import {PaginationInfo} from "../models/pagination";
-import {UserInfo} from "../models/account.model";
-import {AccountService} from "../services/account.service";
+import {Appointment, AppointmentCreate} from "@/models/appointment.model";
+import {AppointmentService} from "@/services/appointment.service";
+import {PaginationInfo} from "@/models/pagination";
+import {UserInfo} from "@/models/account.model";
 import {AxiosResponse} from "axios";
-import {PageResponse, Response} from "../models/response";
+import {PageResponse, Response} from "@/models/response";
 import AppointmentManageModal from "./AppointmentManageModal.vue";
+import {Options, Vue} from "vue-class-component";
 
-export default {
+@Options ({
   components: {
     AppointmentManageModal
-  },
-  data() {
-    return {
-      appointments: [] as Appointment[],
-      actionsModel: new AppointmentCreate(),
-      manageMode: "add" as "add" | "edit",
-      accountService: new AccountService(),
-      appointmentService: new AppointmentService(),
-      isModalOpened: false,
-      isLoading: true,
-      paginationInfo: new PaginationInfo(),
-      websocket: null
-    }
   },
   methods: {
     getData() {
@@ -226,7 +213,18 @@ export default {
     this.websocket.onmessage = this.onSocketMessage;
     this.websocket.onerror = this.onSocketError;
   }
-};
+})
+
+export default class Appointments extends Vue {
+  appointments: Appointment[] = [];
+  actionsModel: AppointmentCreate = new AppointmentCreate();
+  manageMode: "add" | "edit" = "add";
+  appointmentService: AppointmentService = new AppointmentService();
+  isModalOpened: boolean = false;
+  isLoading: boolean = true;
+  paginationInfo: PaginationInfo = new PaginationInfo();
+  websocket: WebSocket;
+}
 </script>
 
 <style scoped>

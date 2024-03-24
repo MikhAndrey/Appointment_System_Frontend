@@ -52,21 +52,17 @@
 </template>
 <script lang="ts">
 import {AxiosResponse} from "axios";
-import {Response} from "../models/response";
-import {Customer} from "../models/customer.model";
-import {CustomerService} from "../services/customer.service";
+import {Response} from "@/models/response";
+import {Customer} from "@/models/customer.model";
+import {CustomerService} from "@/services/customer.service";
+import {Options, Vue} from "vue-class-component";
 
-export default {
+@Options ({
   props: {
     customer: Customer,
     mode: "add" as "add" | "edit"
   },
   emits: ['close', 'refreshData'],
-  data() {
-    return {
-      customerService: new CustomerService()
-    }
-  },
   methods: {
     onAdd() {
       this.customerService.add(this.customer).then((res: AxiosResponse<Response<Customer>>) => {
@@ -111,6 +107,10 @@ export default {
       });
     }
   }
+})
+
+export default class CustomerManageModal extends Vue {
+  customerService: CustomerService = new CustomerService();
 }
 </script>
 

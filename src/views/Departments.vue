@@ -81,26 +81,16 @@
 </template>
 
 <script lang="ts">
-import {UserInfo} from "../models/account.model";
-import {AccountService} from "../services/account.service";
+import {UserInfo} from "@/models/account.model";
+import {AccountService} from "@/services/account.service";
 import {AxiosResponse} from "axios";
-import {Response} from "../models/response";
-import {Department} from "../models/department.model";
-import {DepartmentService} from "../services/department.service";
+import {Response} from "@/models/response";
+import {Department} from "@/models/department.model";
+import {DepartmentService} from "@/services/department.service";
 import DepartmentManageModal from "./DepartmentManageModal.vue";
+import {Options, Vue} from "vue-class-component";
 
-export default {
-  data() {
-    return {
-      departments: [] as Department[],
-      actionsModel: new Department(),
-      manageMode: "add" as "add" | "edit",
-      accountService: new AccountService(),
-      departmentService: new DepartmentService(),
-      isModalOpened: false,
-      isLoading: true
-    }
-  },
+@Options ({
   components: {
     DepartmentManageModal
   },
@@ -174,7 +164,16 @@ export default {
   mounted() {
     this.getData();
   }
-};
+})
+
+export default class Departments extends Vue {
+  departments: Department[] = [];
+  actionsModel: Department = new Department();
+  manageMode: "add" | "edit" = "add";
+  departmentService: DepartmentService = new DepartmentService();
+  isModalOpened: boolean = false;
+  isLoading: boolean = true;
+}
 </script>
 
 <style scoped>

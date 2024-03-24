@@ -51,17 +51,13 @@
 </template>
 
 <script lang="ts">
-import {AccountService} from "../../services/account.service";
+import {AccountService} from "@/services/account.service";
 import router from "../../router";
-import {UserInfo} from "../../models/account.model";
-import {JwtService} from "../../services/jwt.service";
+import {UserInfo} from "@/models/account.model";
+import {JwtService} from "@/services/jwt.service";
+import {Options, Vue} from "vue-class-component";
 
-export default {
-  data() {
-    return {
-      accountService: new AccountService()
-    }
-  },
+@Options ({
   computed: {
     userInfo(): UserInfo | undefined {
       return this.$store.getters.getUserInfo;
@@ -87,7 +83,11 @@ export default {
       router.push({ name: "login" });
     }
   }
-};
+})
+
+export default class Header extends Vue {
+  accountService: AccountService = new AccountService();
+}
 </script>
 
 <style scoped>

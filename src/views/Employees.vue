@@ -118,28 +118,18 @@
 </template>
 
 <script lang="ts">
-import {UserInfo} from "../models/account.model";
-import {AccountService} from "../services/account.service";
-import {EmployeeService} from "../services/employee.service";
-import {Employee, EmployeeCreate} from "../models/employee.model";
+import {UserInfo} from "@/models/account.model";
+import {AccountService} from "@/services/account.service";
+import {EmployeeService} from "@/services/employee.service";
+import {Employee, EmployeeCreate} from "@/models/employee.model";
 import {AxiosResponse} from "axios";
-import {Response} from "../models/response";
+import {Response} from "@/models/response";
 import EmployeeManageModal from "./EmployeeManageModal.vue";
+import {Options, Vue} from "vue-class-component";
 
-export default {
+@Options ({
   components: {
     EmployeeManageModal
-  },
-  data() {
-    return {
-      employees: [] as Employee[],
-      actionsModel: new EmployeeCreate(),
-      manageMode: "add" as "add" | "edit",
-      accountService: new AccountService(),
-      employeeService: new EmployeeService(),
-      isModalOpened: false,
-      isLoading: true
-    }
   },
   methods: {
     getData() {
@@ -212,7 +202,16 @@ export default {
   mounted() {
     this.getData();
   }
-};
+})
+
+export default class Employees extends Vue {
+  employees: Employee[] = [];
+  actionsModel: EmployeeCreate = new EmployeeCreate();
+  manageMode: "add" | "edit" = "add";
+  employeeService: EmployeeService = new EmployeeService();
+  isModalOpened: boolean = false;
+  isLoading: boolean = true;
+}
 </script>
 
 <style scoped>

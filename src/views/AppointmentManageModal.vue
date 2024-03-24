@@ -55,34 +55,23 @@
   </form>
 </template>
 <script lang="ts">
-import {AxiosResponse} from "axios";
-import {Response} from "../models/response";
-import {EmployeeShortModel} from "../models/employee.model";
-import {EmployeeService} from "../services/employee.service";
-import {CustomerService} from "../services/customer.service";
-import {CustomerShortModel} from "../models/customer.model";
-import {Appointment, AppointmentCreate} from "../models/appointment.model";
-import {AppointmentService} from "../services/appointment.service";
-import {DateHelper} from "../helpers/date-helper";
+import {Response} from "@/models/response";
+import {EmployeeShortModel} from "@/models/employee.model";
+import {EmployeeService} from "@/services/employee.service";
+import {CustomerService} from "@/services/customer.service";
+import {CustomerShortModel} from "@/models/customer.model";
+import {Appointment, AppointmentCreate} from "@/models/appointment.model";
+import {AppointmentService} from "@/services/appointment.service";
+import {DateHelper} from "@/helpers/date-helper";
+import {Options, Vue} from "vue-class-component";
+import { AxiosResponse } from "axios";
 
-export default {
+@Options ({
   props: {
     appointment: AppointmentCreate,
     mode: "add" as "add" | "edit"
   },
   emits: ['close', 'refreshData'],
-  data() {
-    return {
-      employeeService: new EmployeeService(),
-      customerService: new CustomerService(),
-      appointmentService: new AppointmentService(),
-      date: new Date(),
-      startDate: new Date(),
-      endDate: new Date(),
-      customers: [] as CustomerShortModel[],
-      employees: [] as EmployeeShortModel[]
-    }
-  },
   methods: {
     getData() {
       this.customerService.getShortModelsList().then((res: AxiosResponse<Response<CustomerShortModel[]>>) => {
@@ -151,6 +140,17 @@ export default {
   mounted() {
     this.getData();
   }
+})
+
+export default class AppointmentManageModal extends Vue {
+  employeeService: EmployeeService = new EmployeeService();
+  customerService: CustomerService = new CustomerService();
+  appointmentService: AppointmentService = new AppointmentService();
+  date: Date = new Date();
+  startDate: Date = new Date();
+  endDate: Date = new Date();
+  customers: CustomerShortModel[] = [];
+  employees: EmployeeShortModel[] = [];
 }
 </script>
 

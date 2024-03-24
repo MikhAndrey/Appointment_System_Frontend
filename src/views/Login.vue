@@ -34,19 +34,14 @@
   </div>
 </template>
 <script lang="ts">
-import {AccountService} from "../services/account.service";
-import {LoginModel} from "../models/account.model";
-import {JwtService} from "../services/jwt.service";
+import {AccountService} from "@/services/account.service";
+import {LoginModel} from "@/models/account.model";
+import {JwtService} from "@/services/jwt.service";
 import router from "../router";
-import {UserInfo} from "../models/account.model";
+import {UserInfo} from "@/models/account.model";
+import {Options, Vue} from "vue-class-component";
 
-export default {
-  data() {
-    return {
-      model: new LoginModel(),
-      accountService: new AccountService()
-    }
-  },
+@Options ({
   methods: {
     login() {
       this.accountService.login(this.model).then((res: any) => {
@@ -74,7 +69,12 @@ export default {
       router.go(-1);
     }
   }
-};
+})
+
+export default class Login extends Vue {
+  model: LoginModel = new LoginModel();
+  accountService: AccountService = new AccountService();
+}
 </script>
 
 <style scoped>

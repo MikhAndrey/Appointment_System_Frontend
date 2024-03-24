@@ -41,7 +41,7 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to: any, from: any, next: any) => {
   if (store.getters.getUserInfo) {
     if (!store.getters.isInPermission(permissionsRouteMap[to.path])) {
       alert("Permission denied!");

@@ -1,8 +1,3 @@
-<script setup lang="ts">
-import Header from './components/layout/Header.vue';
-import Footer from './components/layout/Footer.vue';
-</script>
-
 <template>
   <Header v-if="userInfo" class="w-100"/>
   <router-view/>
@@ -12,10 +7,12 @@ import Footer from './components/layout/Footer.vue';
 
 import {UserInfo} from "./models/account.model";
 import {JwtService} from "./services/jwt.service";
+import {Options, Vue} from "vue-class-component";
+import Header from "@/components/layout/Header.vue";
+import Footer from "@/components/layout/Footer.vue";
 
-export default {
-  data() {
-  },
+@Options({
+  components: {Footer, Header},
   computed: {
     userInfo (): UserInfo | undefined {
       return this.$store.getters.getUserInfo;
@@ -24,7 +21,9 @@ export default {
   mounted() {
     this.$store.commit('setUserInfo', JwtService.getCurrentUserInfo());
   }
-}
+})
+
+export default class App extends Vue {}
 </script>
 <style scoped>
 </style>

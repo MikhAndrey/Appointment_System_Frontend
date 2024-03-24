@@ -117,30 +117,19 @@
 </template>
 
 <script lang="ts">
-import {UserInfo} from "../models/account.model";
-import {AccountService} from "../services/account.service";
+import {UserInfo} from "@/models/account.model";
+import {AccountService} from "@/services/account.service";
 import {AxiosResponse} from "axios";
-import {PageResponse, Response} from "../models/response";
-import {Customer} from "../models/customer.model";
-import {CustomerService} from "../services/customer.service";
-import {PaginationInfo} from "../models/pagination";
+import {PageResponse, Response} from "@/models/response";
+import {Customer} from "@/models/customer.model";
+import {CustomerService} from "@/services/customer.service";
+import {PaginationInfo} from "@/models/pagination";
 import CustomerManageModal from "./CustomerManageModal.vue";
+import {Options, Vue} from "vue-class-component";
 
-export default {
+@Options ({
   components: {
     CustomerManageModal
-  },
-  data() {
-    return {
-      customers: [] as Customer[],
-      actionsModel: new Customer(),
-      manageMode: "add" as "add" | "edit",
-      accountService: new AccountService(),
-      customerService: new CustomerService(),
-      isModalOpened: false,
-      isLoading: true,
-      paginationInfo: new PaginationInfo()
-    }
   },
   methods: {
     getData() {
@@ -216,7 +205,17 @@ export default {
   mounted() {
     this.getData();
   }
-};
+})
+
+export default class Customers extends Vue {
+  customers: Customer[] = [];
+  actionsModel: Customer = new Customer();
+  manageMode: "add" | "edit" = "add";
+  customerService: CustomerService = new CustomerService();
+  isModalOpened: boolean = false;
+  isLoading: boolean = true;
+  paginationInfo: PaginationInfo = new PaginationInfo();
+}
 </script>
 
 <style scoped>

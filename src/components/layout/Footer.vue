@@ -1,7 +1,3 @@
-<script setup>
-
-</script>
-
 <template>
   <footer class="footer">
     <div class="content has-text-centered">
@@ -11,13 +7,11 @@
 </template>
 
 <script lang="ts">
-export default {
-  data() {
-    return {
-      currentYear: new Date().getFullYear()
-    };
-  }
-};
+import {Vue} from "vue-class-component";
+
+export default class Footer extends Vue {
+  currentYear: number = new Date().getFullYear();
+}
 </script>
 
 <style scoped>

@@ -69,28 +69,20 @@
 </template>
 <script lang="ts">
 import {AxiosResponse} from "axios";
-import {Response} from "../models/response";
-import {Employee, EmployeeCreate} from "../models/employee.model";
-import {EmployeeService} from "../services/employee.service";
-import {RoleService} from "../services/role.service";
-import {DepartmentService} from "../services/department.service";
-import {Department} from "../models/department.model";
+import {Response} from "@/models/response";
+import {Employee, EmployeeCreate} from "@/models/employee.model";
+import {EmployeeService} from "@/services/employee.service";
+import {RoleService} from "@/services/role.service";
+import {DepartmentService} from "@/services/department.service";
+import {Department} from "@/models/department.model";
+import {Options, Vue} from "vue-class-component";
 
-export default {
+@Options ({
   props: {
     employee: EmployeeCreate,
     mode: "add" as "add" | "edit"
   },
   emits: ['close', 'refreshData'],
-  data() {
-    return {
-      employeeService: new EmployeeService(),
-      departmentService: new DepartmentService(),
-      roleService: new RoleService(),
-      roles: [] as string[],
-      departments: [] as Department[]
-    }
-  },
   methods: {
     getData() {
       this.roleService.getAll().then((res: AxiosResponse<Response<{name: string}[]>>) => {
@@ -149,6 +141,14 @@ export default {
   mounted() {
     this.getData();
   }
+})
+
+export default class EmployeeManageModal extends Vue {
+  employeeService: EmployeeService = new EmployeeService();
+  departmentService: DepartmentService = new DepartmentService();
+  roleService: RoleService = new RoleService();
+  roles: string[] = [];
+  departments: Department[] = [];
 }
 </script>
 
